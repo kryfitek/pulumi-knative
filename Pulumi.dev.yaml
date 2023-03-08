@@ -1,0 +1,5 @@
+config:
+  gcp:credentials: /home/gsierro/Documents/kryfitek/pulumi-knative-sa.json
+  gcp:project: pulumi-knative
+  gcp:region: us-east1
+  pulumi-knative:nodesPerZone: "1"
