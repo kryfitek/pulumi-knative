@@ -1,0 +1,8 @@
+config:
+  gcp:credentials: /home/gsierro/Documents/kryfitek/pulumi-python-dev-sa.json
+  base:disk_size_gb: "30"
+  base:environment: dev
+  base:machine_tye: n1-standard-1
+  base:nodesPerZone: "1"
+  gcp:project: pulumi-python
+  gcp:region: us-east1
