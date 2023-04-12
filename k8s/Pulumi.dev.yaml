@@ -1,8 +1,9 @@
 config:
   gcp:credentials: /home/gsierro/Documents/kryfitek/pulumi-python-dev-sa.json
-  base:disk_size_gb: "30"
-  base:environment: dev
-  base:machine_tye: n1-standard-1
-  base:nodesPerZone: "1"
-  gcp:project: pulumi-python
+  gcp:project: pulumi-python-382700
   gcp:region: us-east1
+  pp-k8s:disk_size_gb: "30"
+  pp-k8s:environment: dev
+  pp-k8s:machine_tye: n1-standard-1
+  pp-k8s:nodesPerZone: "1"
+  pp-k8s:resources_prefix: "k8s-pp"

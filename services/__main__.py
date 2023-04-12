@@ -1,6 +1,6 @@
 from pulumi import StackReference
 from pulumi_kubernetes import Provider
-from config.config import PulumiConfig
+from modules.config import PulumiConfig
 
 config = PulumiConfig()
 config.showValues()
