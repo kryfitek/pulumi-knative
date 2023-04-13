@@ -12,11 +12,6 @@ k8s_provider = Provider(
     resource_name="k8s-provider",
     kubeconfig=cluster_stack.get_output("kubeconfig")
 )
-k8s_provider_ss = Provider(
-    resource_name="k8s-provider-ss",
-    kubeconfig=cluster_stack.get_output("kubeconfig"),
-    enable_server_side_apply=True
-)
 # cert_manager = CertManager()
 # cert_manager.deploy(k8s_provider)
 # # kong = Kong()
@@ -25,4 +20,4 @@ k8s_provider_ss = Provider(
 # proxy_ip = svc.status.apply(lambda s: s.load_balancer.ingress[0].ip)
 # export("proxy_ip", proxy_ip)
 knative = Knative()
-knative.deploy(k8s_provider, k8s_provider_ss)
+knative.deploy(k8s_provider)

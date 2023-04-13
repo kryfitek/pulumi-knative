@@ -13,7 +13,7 @@
 - roles/container.admin (Administrador de Kubernetes Engine)
 - roles/container.clusterAdmin (Administrador de clústeres de Kubernetes Engine)
 - roles/container.developer (Desarrollador de Kubernetes Engine)
-- roles/iam.serviceAccountAdmin (Administrador de cuenta de servicios)
+- roles/iam.serviceAccountAdmin (Administrador de cuenta de servicio)
 - roles/iam.serviceAccountUser (Usuario de cuenta de servicio)
 - roles/resourcemanager.projectIamAdmin (Administrador de IAM de proyecto)
 - roles/compute.networkAdmin (Administrador de red de Compute)

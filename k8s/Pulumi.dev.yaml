@@ -1,5 +1,5 @@
 config:
-  gcp:credentials: /home/gsierro/Documents/kryfitek/pulumi-python-dev-sa.json
+  gcp:credentials: /home/gsierro/Credentials/gcloud/pulumi-python-dev-sa.json
   gcp:project: pulumi-python-382700
   gcp:region: us-east1
   pp-k8s:disk_size_gb: "30"
