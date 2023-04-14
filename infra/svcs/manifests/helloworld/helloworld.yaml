@@ -6,9 +6,9 @@ spec:
   template:
     spec:
       containers:
-        - image: gcr.io/knative-samples/helloworld-go
+        - image: docker.io/kryfitek/helloworld
           ports:
             - containerPort: 8080
           env:
             - name: TARGET
-              value: "Knative"
+              value: "World"

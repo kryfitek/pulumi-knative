@@ -4,6 +4,7 @@ from modules.config import PulumiConfig
 from modules.kong import Kong
 from modules.knative import Knative
 from modules.cert_manager import CertManager
+from modules.tekton import Tekton
 
 config = PulumiConfig()
 config.showValues()
@@ -14,10 +15,12 @@ k8s_provider = Provider(
 )
 # cert_manager = CertManager()
 # cert_manager.deploy(k8s_provider)
-# # kong = Kong()
-# # kong.deploy(k8s_provider)
-# svc = kong.kong.get_resource('v1/Service', 'kong/kong-proxy')
+# kong = Kong()
+# kong.deploy(k8s_provider)
+# svc = knative.operator.get_resource('v1/Service', 'kong', 'kong')
 # proxy_ip = svc.status.apply(lambda s: s.load_balancer.ingress[0].ip)
 # export("proxy_ip", proxy_ip)
 knative = Knative()
 knative.deploy(k8s_provider)
+tekton = Tekton()
+tekton.deploy(k8s_provider)
