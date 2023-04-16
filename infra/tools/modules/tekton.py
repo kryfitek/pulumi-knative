@@ -25,6 +25,15 @@ class Tekton:
             )
         )
         ConfigGroup(
+            "tekton-dashboard",
+            files = [
+                "manifests/tekton/dashboard.yaml"
+            ], opts = ResourceOptions(
+                provider=k8s_provider,
+                parent=self.triggers
+            )
+        )
+        ConfigGroup(
             "tekton-interceptors",
             files = [
                 "manifests/tekton/interceptors.yaml"
