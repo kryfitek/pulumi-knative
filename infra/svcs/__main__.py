@@ -1,8 +1,9 @@
-from pulumi import StackReference
+from pulumi import StackReference, ResourceOptions
 from pulumi_kubernetes import Provider
+from pulumi_kubernetes.core.v1 import Namespace
+from pulumi_kubernetes.meta.v1 import ObjectMetaArgs
 from modules.config import PulumiConfig
 from modules.helloworld import Helloworld
-from modules.cicd import TektonPipelines
 
 config = PulumiConfig()
 config.showValues()
@@ -11,7 +12,14 @@ k8s_provider = Provider(
     resource_name="k8s.provider",
     kubeconfig=cluster_stack.get_output("kubeconfig")
 )
-pipelines = TektonPipelines()
-pipelines.deploy(k8s_provider)
+services_ns = Namespace(
+    "services",
+    metadata=ObjectMetaArgs(
+        name="services"
+    ),
+    opts=ResourceOptions(
+        provider=k8s_provider
+    )
+)
 Helloworld = Helloworld()
-Helloworld.deploy(k8s_provider)
+Helloworld.deploy(k8s_provider, services_ns)

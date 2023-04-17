@@ -2,11 +2,13 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: hello
+  namespace: services
 spec:
   template:
     spec:
       containers:
-        - image: docker.io/kryfitek/helloworld
+        - image: gcr.io/knative-samples/helloworld-go
+#         - image: docker.io/kryfitek/helloworld
           ports:
             - containerPort: 8080
           env:
