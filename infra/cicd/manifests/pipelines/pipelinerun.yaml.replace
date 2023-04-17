@@ -22,6 +22,8 @@ spec:
       secretName: docker-credentials
   params:
   - name: repo-url
-    value: https://github.com/kryfitek/pulumi-knative.git/src/helloworld/
+    value: https://github.com/kryfitek/pulumi-knative.git
   - name: image-reference
     value: docker.io/kryfitek/helloworld:latest
+  - name: pathToContext
+    value: src/helloworld/

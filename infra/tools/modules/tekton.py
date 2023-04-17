@@ -5,6 +5,8 @@ class Tekton:
     def __init__(self) -> None:
         self.pipelines = None
         self.triggers = None
+        self.interceptors = None
+        self.dashboard = None
 
     def deploy(self, k8s_provider):
         self.pipelines = ConfigGroup(
@@ -24,7 +26,7 @@ class Tekton:
                 parent=self.pipelines
             )
         )
-        ConfigGroup(
+        self.dashboard = ConfigGroup(
             "tekton-dashboard",
             files = [
                 "manifests/tekton/dashboard.yaml"
@@ -33,22 +35,10 @@ class Tekton:
                 parent=self.triggers
             )
         )
-        ConfigGroup(
+        self.interceptors = ConfigGroup(
             "tekton-interceptors",
             files = [
                 "manifests/tekton/interceptors.yaml"
-            ], opts = ResourceOptions(
-                provider=k8s_provider,
-                parent=self.triggers
-            )
-        )
-        ConfigGroup(
-            "tekton-additionals",
-            files = [
-                "manifests/tekton/secrets/docker-credentials.yaml",
-                "manifests/tekton/secrets/git-credentials.yaml",
-                "manifests/tekton/tasks/git-clone.yaml",
-                "manifests/tekton/tasks/kaniko.yaml"
             ], opts = ResourceOptions(
                 provider=k8s_provider,
                 parent=self.triggers

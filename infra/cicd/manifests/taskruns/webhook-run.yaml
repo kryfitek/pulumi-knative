@@ -1,0 +1,28 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: create-webhook-run
+  namespace: services
+spec:
+  taskRef:
+    name: create-webhook
+  params:
+  - name: GitHubOrg
+    value: "kryfitek"
+  - name: GitHubUser
+    value: "kryfitek"
+  - name: GitHubRepo
+    value: "pulumi-knative"
+  - name: GitHubSecretName
+    value: webhook-secret
+  - name: GitHubAccessTokenKey
+    value: token
+  - name: GitHubSecretStringKey
+    value: asecretstring
+  - name: ExternalDomain
+    value: services.kryfitek.com
+#   If you are using github enterprise, provide a value for GitHubDomain
+#  - name: GitHubDomain
+#    value: git.corp.com
+  timeout: 1000s
+  serviceAccountName: tekton-triggers-createwebhook
