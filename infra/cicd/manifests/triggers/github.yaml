@@ -1,47 +1,56 @@
-apiVersion: triggers.tekton.dev/v1alpha1
+apiVersion: triggers.tekton.dev/v1beta1
 kind: EventListener
 metadata:
   name: github-listener-interceptor
+  namespace: cicd
 spec:
   serviceAccountName: tekton-triggers-github-sa
   triggers:
     - name: github-listener
       interceptors:
-        - github:
-            secretRef:
-              secretName: github-secret
-              secretKey: secretToken
-            eventTypes:
-              - pull_request
-        - cel:
-            filter: "body.action in ['opened', 'synchronize', 'reopened']"
+        - ref:
+            name: "github"
+          params:
+            - name: "secretRef"
+              value:
+                secretName: webhook-secret
+                secretKey: secret
+            - name: "eventTypes"
+              value: ["pull_request"]
+        - name: "only when PRs are opened"
+          ref:
+            name: "cel"
+          params:
+            - name: "filter"
+              value: "body.action in ['opened', 'synchronize', 'reopened']"
       bindings:
         - ref: github-pr-binding
       template:
-        name: github-template
+        ref: github-template
 ---
-apiVersion: triggers.tekton.dev/v1alpha1
+apiVersion: triggers.tekton.dev/v1beta1
 kind: TriggerBinding
 metadata:
   name: github-pr-binding
+  namespace: cicd
 spec:
   params:
     - name: gitrevision
       value: $(body.pull_request.head.sha)
     - name: gitrepositoryurl
       value: $(body.repository.clone_url)
-
 ---
-apiVersion: triggers.tekton.dev/v1alpha1
+apiVersion: triggers.tekton.dev/v1beta1
 kind: TriggerTemplate
 metadata:
   name: github-template
+  namespace: cicd
 spec:
   params:
     - name: gitrevision
     - name: gitrepositoryurl
   resourcetemplates:
-    - apiVersion: tekton.dev/v1alpha1
+    - apiVersion: tekton.dev/v1beta1
       kind: TaskRun
       metadata:
         generateName: github-run-
@@ -55,9 +64,9 @@ spec:
             - image: ubuntu
               script: |
                 #! /bin/bash
-                ls -al $(inputs.resources.source.path)                
-        inputs:
-          resources:
+                ls -al $(inputs.resources.source.path)
+        resources:
+          inputs:
             - name: source
               resourceSpec:
                 type: git

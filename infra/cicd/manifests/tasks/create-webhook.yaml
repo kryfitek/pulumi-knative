@@ -2,12 +2,12 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: create-webhook
+  namespace: cicd
 spec:
   volumes:
   - name: github-secret
     secret:
       secretName: $(params.GitHubSecretName)
-
   params:
   - name: ExternalDomain
     description: "The external domain for the EventListener e.g. `$(params.EventListenerName).<PROXYIP>.nip.io`"
