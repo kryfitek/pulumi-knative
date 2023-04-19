@@ -2,11 +2,13 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: tekton-triggers-github-sa
+  namespace: cicd
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: triggers-github-eventlistener-binding
+  namespace: cicd
 subjects:
 - kind: ServiceAccount
   name: tekton-triggers-github-sa
@@ -19,10 +21,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: triggers-github-eventlistener-clusterbinding
+  namespace: cicd
 subjects:
 - kind: ServiceAccount
   name: tekton-triggers-github-sa
-  namespace: services
+  namespace: cicd
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

@@ -2,6 +2,7 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: create-ingress
+  namespace: cicd
 spec:
   volumes:
   - name: work
@@ -24,7 +25,6 @@ spec:
   - name: ServiceUID
     description: "The uid of the service. If set, this creates an owner reference on the service"
     default: ""
-
   steps:
   - name: generate-certificate
     image: frapsoft/openssl
