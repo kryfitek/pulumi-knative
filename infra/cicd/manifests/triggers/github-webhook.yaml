@@ -9,7 +9,7 @@ spec:
     - name: webhook-listener
       interceptors:
         - ref:
-            name: "webhook"
+            name: "github"
             kind: ClusterInterceptor
             apiVersion: triggers.tekton.dev
           params:
@@ -55,20 +55,12 @@ spec:
     - name: gitrepositoryurl
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
-      kind: TaskRun
+      kind: PipelineRun
       metadata:
-        generateName: webhook-run-
+        generateName: services-pipeline-run-
       spec:
-        taskSpec:
-          inputs:
-            resources:
-              - name: source
-                type: git
-          steps:
-            - image: ubuntu
-              script: |
-                #! /bin/bash
-                ls -al $(inputs.resources.source.path)
+        pipelineRef:
+          name: services-pipeline
         resources:
           inputs:
             - name: source
