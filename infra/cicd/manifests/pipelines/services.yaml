@@ -53,4 +53,4 @@ spec:
       - "hello"
       - "--image=$(params.image-reference)"
       - "--env=TARGET=Tekton"
-      - "-n services"
+      - "--service-account=kn-deployer-account"
