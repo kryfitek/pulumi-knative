@@ -1,15 +1,17 @@
 apiVersion: triggers.tekton.dev/v1beta1
 kind: EventListener
 metadata:
-  name: github-listener-interceptor
+  name: webhook-interceptor
   namespace: cicd
 spec:
-  serviceAccountName: tekton-triggers-github-sa
+  serviceAccountName: tekton-triggers-webhook-sa
   triggers:
-    - name: github-listener
+    - name: webhook-listener
       interceptors:
         - ref:
-            name: "github"
+            name: "webhook"
+            kind: ClusterInterceptor
+            apiVersion: triggers.tekton.dev
           params:
             - name: "secretRef"
               value:
@@ -24,26 +26,28 @@ spec:
             - name: "filter"
               value: "body.action in ['opened', 'synchronize', 'reopened']"
       bindings:
-        - ref: github-pr-binding
+        - ref: webhook-pr-binding
       template:
-        ref: github-template
+        ref: webhook-template
 ---
 apiVersion: triggers.tekton.dev/v1beta1
 kind: TriggerBinding
 metadata:
-  name: github-pr-binding
+  name: webhook-pr-binding
   namespace: cicd
 spec:
   params:
     - name: gitrevision
       value: $(body.pull_request.head.sha)
+    - name: namespace
+      value: cicd
     - name: gitrepositoryurl
       value: $(body.repository.clone_url)
 ---
 apiVersion: triggers.tekton.dev/v1beta1
 kind: TriggerTemplate
 metadata:
-  name: github-template
+  name: webhook-template
   namespace: cicd
 spec:
   params:
@@ -53,7 +57,7 @@ spec:
     - apiVersion: tekton.dev/v1beta1
       kind: TaskRun
       metadata:
-        generateName: github-run-
+        generateName: webhook-run-
       spec:
         taskSpec:
           inputs:
