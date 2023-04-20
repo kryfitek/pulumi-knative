@@ -7,10 +7,10 @@ metadata:
   namespace: cicd
 # Link the container registry secrets
 secrets:
-  - name: container-registry
+  - name: docker-credentials
 # To be able to pull the (private) image from the container registry
 imagePullSecrets:
-  - name: container-registry
+  - name: docker-credentials
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
