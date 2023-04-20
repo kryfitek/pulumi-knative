@@ -7,7 +7,6 @@ spec:
   volumes:
   - name: work
     emptyDir: {}
-
   params:
   - name: CreateCertificate
     description: "Enables/disables the creation of a self-signed certificate for $(params.ExternalDomain)"
@@ -25,6 +24,8 @@ spec:
   - name: ServiceUID
     description: "The uid of the service. If set, this creates an owner reference on the service"
     default: ""
+  - name: Namespace
+    description: "The namespace where the service will be created on"
   steps:
   - name: generate-certificate
     image: frapsoft/openssl
@@ -63,7 +64,7 @@ spec:
       if [ $(params.CreateCertificate) = "false" ];then
         exit 0
       fi
-      kubectl create secret tls $(params.CertificateSecretName) --cert=/var/tmp/work/ingress/certificate.pem --key=/var/tmp/work/ingress/key.pem || true
+      kubectl create secret tls $(params.CertificateSecretName) --cert=/var/tmp/work/ingress/certificate.pem --key=/var/tmp/work/ingress/key.pem --namespace=$(params.Namespace) || true
       EOF
   - name: create-ingress
     image: lachlanevenson/k8s-kubectl:latest
@@ -79,6 +80,7 @@ spec:
         kind: Ingress
         metadata:
           name: $(params.Service)
+          namespace: $(params.Namespace)
           ownerReferences:
           - name: $(params.Service)
             apiVersion: v1
@@ -96,7 +98,7 @@ spec:
               - pathType: ImplementationSpecific
                 backend:
                   service:
-                    name: $(params.Service)
+                    name: el-$(params.Service)
                     port:
                       number: $(params.ServicePort)
       EOF
@@ -106,7 +108,11 @@ spec:
         kind: Ingress
         metadata:
           name: $(params.Service)
+          namespace: $(params.Namespace)
+          annotations:
+            konghq.com/strip-path: 'true'
         spec:
+          ingressClassName: kong
           tls:
           - secretName: $(params.CertificateSecretName)
             hosts:
@@ -118,7 +124,7 @@ spec:
               - pathType: ImplementationSpecific
                 backend:
                   service:
-                    name: $(params.Service)
+                    name: el-$(params.Service)
                     port:
                       number: $(params.ServicePort)
       EOF

@@ -5,9 +5,9 @@ metadata:
   namespace: cicd
 subjects:
 - kind: ServiceAccount
-  name: tekton-triggers-github-sa
+  name: tekton-triggers-webhook-sa
   namespace: cicd
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: tekton-triggers-github-clusterrole
+  name: tekton-triggers-webhook-clusterrole

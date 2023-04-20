@@ -14,10 +14,13 @@ spec:
   - name: CertificateSecretName
     value: ingresssecret
   - name: ExternalDomain
-    value: services.kryfitek.com
+    value: webhook.34.73.155.235.nip.io
+    # value: webhook.kryfitek.com
   - name: Service
-    value: services
+    value: webhook-interceptor
   - name: ServicePort
     value: "8080"
+  - name: Namespace
+    value: cicd
   timeout: 1000s
   serviceAccountName: tekton-triggers-createwebhook

@@ -18,9 +18,10 @@ spec:
   - name: GitHubAccessTokenKey
     value: token
   - name: GitHubSecretStringKey
-    value: asecretstring
+    value: secret
   - name: ExternalDomain
-    value: services.kryfitek.com
+    value: webhook.34.73.155.235.nip.io
+    # value: webhook.kryfitek.com
 #   If you are using github enterprise, provide a value for GitHubDomain
 #  - name: GitHubDomain
 #    value: git.corp.com
