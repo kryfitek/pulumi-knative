@@ -41,3 +41,15 @@ spec:
       value: $(params.image-reference)
     - name: CONTEXT
       value: $(params.pathToContext)
+  - name: deploy
+    runAfter: ["build-push"]
+    taskRef:
+      name: kn
+    params:
+    - name: ARGS
+      value:
+      - "service"
+      - "update"
+      - "hello"
+      - "--image=$(params.image-reference)"
+      - "--env=TARGET=Tekton"
