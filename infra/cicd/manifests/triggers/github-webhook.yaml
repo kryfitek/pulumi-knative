@@ -58,16 +58,29 @@ spec:
       kind: PipelineRun
       metadata:
         generateName: services-pipeline-run-
+        namespace: cicd
       spec:
         pipelineRef:
           name: services-pipeline
-        resources:
-          inputs:
-            - name: source
-              resourceSpec:
-                type: git
-                params:
-                  - name: revision
-                    value: $(tt.params.gitrevision)
-                  - name: url
-                    value: $(tt.params.gitrepositoryurl)
+        podTemplate:
+          securityContext:
+            fsGroup: 65532
+        workspaces:
+        - name: shared-data
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+              - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 1Gi
+        - name: docker-credentials
+          secret:
+            secretName: docker-credentials
+        params:
+        - name: repo-url
+          value: https://github.com/kryfitek/pulumi-knative.git
+        - name: image-reference
+          value: docker.io/kryfitek/helloworld:latest
+        - name: pathToContext
+          value: src/helloworld/
