@@ -19,4 +19,4 @@ def hello_world():
 
 @app.route("/health-check", methods=["GET"])
 def healthcheck():
-    return "success!"
+    return "success"
