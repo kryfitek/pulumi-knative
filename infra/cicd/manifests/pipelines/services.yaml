@@ -53,3 +53,4 @@ spec:
       - "hello"
       - "--image=$(params.image-reference)"
       - "--env=TARGET=Tekton"
+      - "-n services"
