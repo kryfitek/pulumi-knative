@@ -41,7 +41,7 @@ spec:
       value: $(params.image-reference)
     - name: CONTEXT
       value: $(params.pathToContext)
-  - name: deploy
+  - name: kn-deploy
     runAfter: ["build-push"]
     taskRef:
       name: kn
