@@ -54,4 +54,3 @@ spec:
       - "--namespace=services"
       - "--image=$(params.image-reference)"
       - "--env=TARGET=Tekton"
-      - "--service-account=kn-deployer-account"
