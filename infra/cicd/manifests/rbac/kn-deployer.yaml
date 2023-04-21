@@ -4,7 +4,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: kn-deployer-account
-  namespace: cicd
+  namespace: services
 # Link the container registry secrets
 secrets:
   - name: docker-credentials
@@ -16,7 +16,7 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: kn-deployer
-  namespace: cicd
+  namespace: services
 rules:
   - apiGroups: ["serving.knative.dev"]
     resources: ["services"]
@@ -29,7 +29,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: kn-deployer-account
-  namespace: cicd
+  namespace: services
 roleRef:
   kind: ClusterRole
   name: kn-deployer
