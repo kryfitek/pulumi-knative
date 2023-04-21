@@ -60,7 +60,6 @@ spec:
         generateName: services-pipeline-run-
         namespace: cicd
       spec:
-        serviceAccountName: kn-deployer-account
         pipelineRef:
           name: services-pipeline
         podTemplate:
