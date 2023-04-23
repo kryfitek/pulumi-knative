@@ -63,6 +63,7 @@ spec:
         taskRunSpecs:
         - pipelineTaskName: kn-deploy
           taskServiceAccountName: kn-deployer-account
+          namespace: cicd
         pipelineRef:
           name: services-pipeline
         podTemplate:
