@@ -1,5 +1,39 @@
 # Define a ServiceAccount named kn-deployer-account that has permission to
 # manage Knative services.
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kn-deployer
+rules:
+  - apiGroups: ["serving.knative.dev"]
+    resources: ["services", "revisions", "routes"]
+    verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kn-deployer-account
+  namespace: services
+# Link the container registry secrets
+secrets:
+  - name: docker-credentials
+# To be able to pull the (private) image from the container registry
+imagePullSecrets:
+  - name: docker-credentials
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kn-deployer-binding-svcs
+subjects:
+- kind: ServiceAccount
+  name: kn-deployer-account
+  namespace: services
+roleRef:
+  kind: ClusterRole
+  name: kn-deployer
+  apiGroup: rbac.authorization.k8s.io
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -12,20 +46,10 @@ secrets:
 imagePullSecrets:
   - name: docker-credentials
 ---
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: kn-deployer
-  namespace: cicd
-rules:
-  - apiGroups: ["serving.knative.dev"]
-    resources: ["services"]
-    verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
----
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: kn-deployer-binding
+  name: kn-deployer-binding-cicd
 subjects:
 - kind: ServiceAccount
   name: kn-deployer-account
