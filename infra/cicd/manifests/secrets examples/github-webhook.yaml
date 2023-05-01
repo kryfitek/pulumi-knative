@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: webhook-secret
+  namespace: cicd
+stringData:
+  token:  <developer token created>
+  secret: tekton@kryfitek
