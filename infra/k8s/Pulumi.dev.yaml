@@ -1,9 +1,9 @@
 config:
-  gcp:credentials: /home/gsierro/Credentials/gcloud/pulumi-python-dev-sa.json
-  gcp:project: pulumi-python-382700
+  gcp:credentials: /home/gsierro/credentials/gcloud/python-knative-kryfitek-dev.json
+  gcp:project: python-knative
   gcp:region: us-east1
   pp-k8s:disk_size_gb: 30
   pp-k8s:environment: dev
-  pp-k8s:machine_tye: e2-medium
-  pp-k8s:nodesPerZone: 1
-  pp-k8s:resources_prefix: k8s-pp
+  pp-k8s:machine_type: e2-medium
+  pp-k8s:nodesPerZone: 2
+  pp-k8s:resources_prefix: kn-pp
