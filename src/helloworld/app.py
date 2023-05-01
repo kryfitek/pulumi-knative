@@ -12,7 +12,7 @@ def hello_world():
         "host": request.headers["Host"],
         "user-agent": request.headers["User-Agent"],
         "timestamp": timestamp,
-        "data": "Hello {}!\n".format(target),
+        "data": "Hello {}! How are you?\n".format(target),
         "form": request.form,
         "json": request.get_json()
     }
