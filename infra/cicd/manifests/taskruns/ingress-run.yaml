@@ -14,7 +14,7 @@ spec:
   - name: CertificateSecretName
     value: ingresssecret
   - name: ExternalDomain
-    value: webhook.34.73.155.235.nip.io
+    value: webhook.34.23.206.4.nip.io
     # value: webhook.kryfitek.com
   - name: Service
     value: webhook-interceptor

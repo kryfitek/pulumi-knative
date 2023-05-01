@@ -20,7 +20,7 @@ spec:
   - name: GitHubSecretStringKey
     value: secret
   - name: ExternalDomain
-    value: webhook.34.73.155.235.nip.io
+    value: webhook.34.23.206.4.nip.io
     # value: webhook.kryfitek.com
 #   If you are using github enterprise, provide a value for GitHubDomain
 #  - name: GitHubDomain
