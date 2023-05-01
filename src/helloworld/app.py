@@ -4,14 +4,15 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET"])
+@app.route("/", methods=["POST"])
 def hello_world():
     target = os.environ .get("TARGET", "World")
+    timestamp = datetime.now().isoformat()
     resp = {
         "host": request.headers["Host"],
         "user-agent": request.headers["User-Agent"],
-        "timestamp": datetime.now().isoformat(),
-        "data": "Hello {}!!\n".format(target),
+        "timestamp": timestamp,
+        "data": "Hello {}!\n".format(target),
         "form": request.form,
         "json": request.get_json()
     }

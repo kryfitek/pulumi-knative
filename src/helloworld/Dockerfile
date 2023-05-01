@@ -8,14 +8,17 @@ RUN apk add curl
 
 # Copy local code to the container image.
 ENV APP_HOME /app
+ENV PORT 8080
 WORKDIR $APP_HOME
 COPY app.py wsgi.py requirements.txt ./
 
 # Install production dependencies.
 RUN pip install -r requirements.txt
 
+EXPOSE $PORT
+
 HEALTHCHECK --start-period=5s --timeout=15s --interval=30s \
-    CMD curl --fail http://localhost:8080/health-check || exit 1   
+    CMD curl --fail http://localhost:$PORT/health-check || exit 1   
 
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and 8 threads.
