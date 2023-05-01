@@ -2,9 +2,9 @@
 1. gcloud CLI and gke-gcloud-auth-plugin installed
 2. docker CLI installed
 3. kubectl installed
-4. Having a docker hub (registry) account
+4. Having a docker hub (registry) account (https://hub.docker.com/)
 5. pulumi CLI installed
-6. Create and configure a pulumi account
+6. Create and configure a pulumi account (https://www.pulumi.com/)
 
 # BEFORE STARTING
 ### Create a Service Account in GCP with the following project roles:
@@ -26,13 +26,28 @@
 - Creates keys for service account (json file) and use it for gcloud auth:
     gcloud auth activate-service-account <account> --key-file=<json_file>
 
+# ARCHITECTURE
+![Project Architecture](images/diagram.png)
+
 # RUNNING PULUMI
 ### Create GKE cluster
     $ cd k8s
     $ pulumi up
 
-### Deploy Istio and Knative
+### Deploy Knative, Kourier, Kong and Tekton
     $ cd ../tools
+    $ pulumi up
+
+### Services
+    $ cd ../svcs
+    $ pulumi up
+
+### Deploy CI / CD
+Change IP at ingress-run.yaml and webhook-run.yaml using Kong Proxy IP:
+
+> value: webhook.**34.23.206.4**.nip.io
+
+    $ cd ../cicd
     $ pulumi up
 
 # AFTER RUNNING PULUMI
