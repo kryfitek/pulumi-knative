@@ -4,6 +4,7 @@ from pulumi_kubernetes.core.v1 import Namespace
 from pulumi_kubernetes.meta.v1 import ObjectMetaArgs
 from modules.config import PulumiConfig
 from modules.helloworld import Helloworld
+from modules.clock import Clock
 
 config = PulumiConfig()
 config.showValues()
@@ -21,5 +22,7 @@ services_ns = Namespace(
         provider=k8s_provider
     )
 )
-Helloworld = Helloworld()
-Helloworld.deploy(k8s_provider, services_ns)
+helloworld = Helloworld()
+helloworld.deploy(k8s_provider, services_ns)
+clock = Clock()
+clock.deploy(k8s_provider, services_ns)

@@ -1,2 +1,5 @@
 config:
+  gcp:credentials: /home/gsierro/credentials/gcloud/python-knative-kryfitek-dev.json
+  gcp:project: python-knative
+  gcp:region: us-east1
   pp-services:environment: dev
