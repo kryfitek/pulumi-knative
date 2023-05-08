@@ -61,7 +61,9 @@ spec:
         namespace: cicd
       spec:
         taskRunSpecs:
-        - pipelineTaskName: kn-deploy
+        - pipelineTaskName: kn-deploy-hello
+          taskServiceAccountName: kn-deployer-account
+        - pipelineTaskName: kn-deploy-clock
           taskServiceAccountName: kn-deployer-account
         pipelineRef:
           name: services-pipeline
