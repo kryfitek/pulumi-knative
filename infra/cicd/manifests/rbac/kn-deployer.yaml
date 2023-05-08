@@ -12,7 +12,7 @@ rules:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: kn-deployer-account
+  name: kn-deployer-account-svcs
   namespace: services
 # Link the container registry secrets
 secrets:
@@ -27,7 +27,7 @@ metadata:
   name: kn-deployer-binding-svcs
 subjects:
 - kind: ServiceAccount
-  name: kn-deployer-account
+  name: kn-deployer-account-svcs
   namespace: services
 roleRef:
   kind: ClusterRole

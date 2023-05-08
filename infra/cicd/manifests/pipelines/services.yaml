@@ -68,7 +68,7 @@ spec:
       - "--namespace=services"
       - "--image=$(params.docker-repo)/helloworld:latest"
       - "--env=TARGET=Tekton"
-      - "--service-account=kn-deployer-account"
+      - "--service-account=kn-deployer-account-svcs"
   - name: kn-deploy-clock
     runAfter: ["build-push-clock"]
     taskRef:
@@ -82,4 +82,4 @@ spec:
       - "--namespace=services"
       - "--image=$(params.docker-repo)/clock:latest"
       - "--env=TARGET=Tekton"
-      - "--service-account=kn-deployer-account"
+      - "--service-account=kn-deployer-account-svcs"
