@@ -12,7 +12,7 @@ spec:
     type: string
   - name: pathToContext
     type: string
-  - name: image-reference
+  - name: docker-repo
     type: string
   workspaces:
   - name: shared-data
@@ -27,7 +27,7 @@ spec:
     params:
     - name: url
       value: $(params.repo-url)
-  - name: build-push
+  - name: build-push-hello
     runAfter: ["fetch-source"]
     taskRef:
       name: kaniko
@@ -38,11 +38,25 @@ spec:
       workspace: docker-credentials
     params:
     - name: IMAGE
-      value: $(params.image-reference)
+      value: $(params.docker-repo)/helloworld:latest
     - name: CONTEXT
-      value: $(params.pathToContext)
-  - name: kn-deploy
-    runAfter: ["build-push"]
+      value: $(params.pathToContext)/helloworld
+  - name: build-push-clock
+    runAfter: ["fetch-source"]
+    taskRef:
+      name: kaniko
+    workspaces:
+    - name: source
+      workspace: shared-data
+    - name: dockerconfig
+      workspace: docker-credentials
+    params:
+    - name: IMAGE
+      value: $(params.docker-repo)/clock:latest
+    - name: CONTEXT
+      value: $(params.pathToContext)/clock
+  - name: kn-deploy-hello
+    runAfter: ["build-push-hello"]
     taskRef:
       name: kn
     params:
@@ -52,6 +66,20 @@ spec:
       - "update"
       - "hello"
       - "--namespace=services"
-      - "--image=$(params.image-reference)"
+      - "--image=$(params.docker-repo)/helloworld:latest"
+      - "--env=TARGET=Tekton"
+      - "--service-account=kn-deployer-account"
+  - name: kn-deploy-clock
+    runAfter: ["build-push-clock"]
+    taskRef:
+      name: kn
+    params:
+    - name: ARGS
+      value:
+      - "service"
+      - "update"
+      - "clock"
+      - "--namespace=services"
+      - "--image=$(params.docker-repo)/clock:latest"
       - "--env=TARGET=Tekton"
       - "--service-account=kn-deployer-account"
