@@ -83,7 +83,7 @@ spec:
         params:
         - name: repo-url
           value: https://github.com/kryfitek/pulumi-knative.git
-        - name: image-reference
-          value: docker.io/kryfitek/helloworld:latest
+        - name: docker-repo
+          value: docker.io/kryfitek
         - name: pathToContext
-          value: src/helloworld/
+          value: src
